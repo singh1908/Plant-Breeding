@@ -5,7 +5,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 
 # --- 1. SETUP AND DATA PREPARATION ---
-app = Flask(__name__)
+app = Flask(_name_)
 CORS(app) # Enable Cross-Origin Resource Sharing
 
 # Load and prepare data at startup
@@ -77,5 +77,5 @@ def predict():
     
     return jsonify(predictions)
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.run(debug=True)
