@@ -106,8 +106,21 @@ function App() {
 // Basic styling - you can move this to App.css for better organization
 const styles = `
 :root { --primary-color: #27ae60; --bg-color: #f4f6f8; --card-bg: #ffffff; --text-color: #34495e; }
-body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; background-color: var(--bg-color); color: var(--text-color); }
-.container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+
+/* --- MODIFIED FOR CENTERING --- */
+body { 
+  margin: 0; 
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; 
+  background-color: var(--bg-color); 
+  color: var(--text-color); 
+  /* Added Flexbox properties for centering */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container { max-width: 800px; padding: 2rem; } /* Removed margin: 0 auto; as it's handled by body's flex */
 header { text-align: center; margin-bottom: 2rem; }
 header h1 { color: var(--primary-color); }
 .predictor-form { background: var(--card-bg); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
