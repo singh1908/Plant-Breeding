@@ -57,45 +57,67 @@ function App() {
     <div className="container">
       <header>
         <h1>🌱 Plant Performance Predictor</h1>
-        <p>Choose genetic & environmental factors to predict performance.</p>
+
+        <p>Choose genetic & environmental factors to simulate plant traits.</p>
+
       </header>
 
       <main>
         <form onSubmit={handleSubmit} className="predictor-form">
           <div className="form-grid">
-            <label>Genotype ID:
+
+            <label>
+              Genotype ID:
+
               <select name="Genotype_ID" value={formData.Genotype_ID} onChange={handleInputChange}>
                 {options.genotypes.map(o => <option key={o} value={o}>{o}</option>)}
               </select>
             </label>
-            <label>Marker A (T/C):
+
+            <label>
+              Marker A (T/C):
+
               <select name="Marker_A (T/C)" value={formData['Marker_A (T/C)']} onChange={handleInputChange}>
                 {options.markers.map(o => <option key={o} value={o}>{o}</option>)}
               </select>
             </label>
-            <label>Gene R1 (P/A):
+
+            <label>
+              Gene R1 (P/A):
+
               <select name="Gene_R1 (P/A)" value={formData['Gene_R1 (P/A)']} onChange={handleInputChange}>
                 {options.genes.map(o => <option key={o} value={o}>{o}</option>)}
               </select>
             </label>
-            <label>QTL Fruit Size:
+
+            <label>
+              QTL Fruit Size:
+
               <select name="QTL_Fruit_Size (A1/A2)" value={formData['QTL_Fruit_Size (A1/A2)']} onChange={handleInputChange}>
                 {options.qtls.map(o => <option key={o} value={o}>{o}</option>)}
               </select>
             </label>
-            <label>Location:
+
+            <label>
+              Location:
+
               <select name="Location" value={formData.Location} onChange={handleInputChange}>
                 {options.locations.map(o => <option key={o} value={o}>{o}</option>)}
               </select>
             </label>
-            <label>Irrigation Level:
+
+            <label>
+              Irrigation Level:
+
               <select name="Irrigation_Level" value={formData.Irrigation_Level} onChange={handleInputChange}>
                 {options.irrigations.map(o => <option key={o} value={o}>{o}</option>)}
               </select>
             </label>
           </div>
           <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Predicting...' : '🚀 Predict Performance'}
+
+            {isLoading ? '🔄 Predicting...' : '🚀 Predict Performance'}
+
           </button>
         </form>
 
@@ -104,13 +126,28 @@ function App() {
           {isLoading && <div className="loading-spinner"></div>}
           {predictions && (
             <div className="results-card">
-              <h2>🌿 Predicted Profile</h2>
-              <ul>
-                <li><strong>Yield:</strong> {predictions.predicted_yield.toFixed(2)} g</li>
-                <li><strong>Sugar Content:</strong> {predictions.predicted_quality.toFixed(2)} °Brix</li>
-                <li><strong>Stress Tolerance:</strong> {predictions.predicted_stress.toFixed(2)} (lower is better)</li>
-                <li><strong>Days to Flowering:</strong> {predictions.predicted_agronomic.toFixed(2)} days</li>
-              </ul>
+
+              <h2>📊 Predicted Performance</h2>
+              <div className="stats-grid">
+                <div className="stat-box yield">
+                  <h3>🍅 Yield</h3>
+                  <p>{predictions.predicted_yield.toFixed(2)} g</p>
+                </div>
+                <div className="stat-box sugar">
+                  <h3>🍭 Sugar</h3>
+                  <p>{predictions.predicted_quality.toFixed(2)} Brix</p>
+                </div>
+                <div className="stat-box stress">
+                  <h3>💧 Stress Tolerance</h3>
+                  <p>{predictions.predicted_stress.toFixed(2)}</p>
+                  <small>(lower is better)</small>
+                </div>
+                <div className="stat-box flowering">
+                  <h3>🌼 Flowering</h3>
+                  <p>{predictions.predicted_agronomic.toFixed(2)} days</p>
+                </div>
+              </div>
+
             </div>
           )}
         </div>
@@ -119,20 +156,23 @@ function App() {
   );
 }
 
+
+// --- True Black Theme Styling ---
 const styles = `
-:root {
-  --primary-color: #27ae60;
-  --secondary-color: #2ecc71;
-  --bg-gradient: linear-gradient(135deg, #e0f7fa, #f1f8e9);
-  --card-bg: #ffffff;
-  --text-color: #34495e;
+:root { 
+  --primary: #27ae60; 
+  --secondary: #2ecc71; 
+  --bg-dark: #000000;   /* true black */
+  --card-bg: #111111;   /* deep black panel */
+  --text-color: #f5f5f5; 
 }
 
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: var(--bg-gradient);
-  color: var(--text-color);
+body { 
+  margin: 0; 
+  font-family: 'Poppins', sans-serif; 
+  background: var(--bg-dark); 
+  color: var(--text-color); 
+
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -140,6 +180,138 @@ body {
   padding: 2rem;
 }
 
+.container { 
+  max-width: 900px; 
+  width: 100%; 
+  padding: 2rem; 
+}
+
+header { text-align: center; margin-bottom: 2rem; }
+header h1 { 
+  color: var(--secondary); 
+  font-size: 2.4rem; 
+  margin-bottom: 0.5rem; 
+  text-shadow: 0 0 12px rgba(46,204,113,0.9);
+}
+header p { font-size: 1.1rem; color: #aaaaaa; }
+
+.predictor-form { 
+  background: var(--card-bg); 
+  padding: 2rem; 
+  border-radius: 16px; 
+  box-shadow: 0 0 20px rgba(0,255,100,0.2); 
+  transition: transform 0.2s ease, box-shadow 0.3s;
+}
+.predictor-form:hover { 
+  transform: translateY(-3px); 
+  box-shadow: 0 0 35px rgba(0,255,100,0.35);
+}
+
+.form-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+  gap: 1.5rem; 
+  margin-bottom: 1.5rem; 
+}
+label { display: flex; flex-direction: column; font-weight: 600; }
+select { 
+  padding: 0.75rem; 
+  border-radius: 8px; 
+  border: 1px solid #333; 
+  background: #000; 
+  color: var(--text-color); 
+  margin-top: 0.5rem; 
+  font-size: 1rem; 
+  transition: all 0.2s;
+}
+select:focus { border-color: var(--secondary); outline: none; box-shadow: 0 0 6px rgba(39,174,96,0.8); }
+
+button { 
+  width: 100%; 
+  padding: 1rem; 
+  font-size: 1.1rem; 
+  font-weight: bold; 
+  color: white; 
+  background: var(--primary); 
+  border: none; 
+  border-radius: 8px; 
+  cursor: pointer; 
+  transition: all 0.3s; 
+}
+button:hover { background: var(--secondary); transform: scale(1.03); }
+button:disabled { background: #333; cursor: not-allowed; }
+
+.results-container { margin-top: 2rem; }
+.results-card { 
+  background: var(--card-bg); 
+  padding: 2rem; 
+  border-radius: 16px; 
+  box-shadow: 0 0 20px rgba(0,255,100,0.25); 
+  animation: fadeIn 0.5s ease-in-out;
+}
+.results-card h2 { 
+  margin-top: 0; 
+  color: var(--secondary); 
+  text-align: center; 
+  margin-bottom: 1.5rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-box {
+  background: #000; /* pure black inside cards */
+  padding: 1.2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0,255,100,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s;
+}
+.stat-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px rgba(0,255,100,0.4);
+}
+.stat-box h3 {
+  margin: 0 0 0.5rem;
+  color: var(--secondary);
+}
+.stat-box p {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 0;
+}
+.stat-box small {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+/* Special accent colors */
+.stat-box.yield { border-left: 4px solid #27ae60; }
+.stat-box.sugar { border-left: 4px solid #f1c40f; }
+.stat-box.stress { border-left: 4px solid #e74c3c; }
+.stat-box.flowering { border-left: 4px solid #3498db; }
+
+.error-message { 
+  color: #e74c3c; 
+  background: #1a0000; 
+  padding: 1rem; 
+  border-radius: 8px; 
+  text-align: center; 
+  font-weight: 600; 
+}
+.loading-spinner { 
+  border: 5px solid #111; 
+  border-top: 5px solid var(--secondary); 
+  border-radius: 50%; 
+  width: 50px; 
+  height: 50px; 
+  animation: spin 1s linear infinite; 
+  margin: 2rem auto; 
+}
 .container {
   width: 100%;
   max-width: 850px;
@@ -277,4 +449,4 @@ styleSheet.innerText = styles;
 document.head.appendChild(styleSheet);
 
 export default App;
-  
+
