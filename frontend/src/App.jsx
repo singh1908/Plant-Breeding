@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-// --- Static Options for Form Dropdowns ---
-// In a real app, these might come from the dataset dynamically
 const options = {
   genotypes: Array.from({ length: 5000 }, (_, i) => `G${String(i + 1).padStart(2, '0')}`),
   markers: ['T', 'C'],
@@ -59,41 +57,59 @@ function App() {
     <div className="container">
       <header>
         <h1>🌱 Plant Performance Predictor</h1>
-        <p>Select the genetic and environmental factors to predict plant performance.</p>
+        <p>Choose genetic & environmental factors to predict performance.</p>
       </header>
 
       <main>
         <form onSubmit={handleSubmit} className="predictor-form">
           <div className="form-grid">
-            {/* Genotype */}
-            <label>Genotype ID: <select name="Genotype_ID" value={formData.Genotype_ID} onChange={handleInputChange}>{options.genotypes.map(o => <option key={o} value={o}>{o}</option>)}</select></label>
-            {/* Marker A */}
-            <label>Marker A (T/C): <select name="Marker_A (T/C)" value={formData['Marker_A (T/C)']} onChange={handleInputChange}>{options.markers.map(o => <option key={o} value={o}>{o}</option>)}</select></label>
-            {/* Gene R1 */}
-            <label>Gene R1 (P/A): <select name="Gene_R1 (P/A)" value={formData['Gene_R1 (P/A)']} onChange={handleInputChange}>{options.genes.map(o => <option key={o} value={o}>{o}</option>)}</select></label>
-            {/* QTL */}
-            <label>QTL Fruit Size: <select name="QTL_Fruit_Size (A1/A2)" value={formData['QTL_Fruit_Size (A1/A2)']} onChange={handleInputChange}>{options.qtls.map(o => <option key={o} value={o}>{o}</option>)}</select></label>
-            {/* Location */}
-            <label>Location: <select name="Location" value={formData.Location} onChange={handleInputChange}>{options.locations.map(o => <option key={o} value={o}>{o}</option>)}</select></label>
-            {/* Irrigation */}
-            <label>Irrigation Level: <select name="Irrigation_Level" value={formData.Irrigation_Level} onChange={handleInputChange}>{options.irrigations.map(o => <option key={o} value={o}>{o}</option>)}</select></label>
+            <label>Genotype ID:
+              <select name="Genotype_ID" value={formData.Genotype_ID} onChange={handleInputChange}>
+                {options.genotypes.map(o => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </label>
+            <label>Marker A (T/C):
+              <select name="Marker_A (T/C)" value={formData['Marker_A (T/C)']} onChange={handleInputChange}>
+                {options.markers.map(o => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </label>
+            <label>Gene R1 (P/A):
+              <select name="Gene_R1 (P/A)" value={formData['Gene_R1 (P/A)']} onChange={handleInputChange}>
+                {options.genes.map(o => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </label>
+            <label>QTL Fruit Size:
+              <select name="QTL_Fruit_Size (A1/A2)" value={formData['QTL_Fruit_Size (A1/A2)']} onChange={handleInputChange}>
+                {options.qtls.map(o => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </label>
+            <label>Location:
+              <select name="Location" value={formData.Location} onChange={handleInputChange}>
+                {options.locations.map(o => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </label>
+            <label>Irrigation Level:
+              <select name="Irrigation_Level" value={formData.Irrigation_Level} onChange={handleInputChange}>
+                {options.irrigations.map(o => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </label>
           </div>
           <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Predicting...' : 'Predict Performance'}
+            {isLoading ? 'Predicting...' : '🚀 Predict Performance'}
           </button>
         </form>
 
         <div className="results-container">
-          {error && <div className="error-message">Error: {error}</div>}
+          {error && <div className="error-message">⚠️ {error}</div>}
           {isLoading && <div className="loading-spinner"></div>}
           {predictions && (
             <div className="results-card">
-              <h2>Predicted Performance Profile</h2>
+              <h2>🌿 Predicted Profile</h2>
               <ul>
-                <li><strong>Yield (Avg. Fruit Weight):</strong> {predictions.predicted_yield.toFixed(2)} grams</li>
-                <li><strong>Quality (Sugar Content):</strong> {predictions.predicted_quality.toFixed(2)} Brix</li>
-                <li><strong>Stress Tolerance (Drought Score):</strong> {predictions.predicted_stress.toFixed(2)} <em>(lower is better)</em></li>
-                <li><strong>Agronomic (Days to Flowering):</strong> {predictions.predicted_agronomic.toFixed(2)} days</li>
+                <li><strong>Yield:</strong> {predictions.predicted_yield.toFixed(2)} g</li>
+                <li><strong>Sugar Content:</strong> {predictions.predicted_quality.toFixed(2)} °Brix</li>
+                <li><strong>Stress Tolerance:</strong> {predictions.predicted_stress.toFixed(2)} (lower is better)</li>
+                <li><strong>Days to Flowering:</strong> {predictions.predicted_agronomic.toFixed(2)} days</li>
               </ul>
             </div>
           )}
@@ -103,45 +119,162 @@ function App() {
   );
 }
 
-// Basic styling - you can move this to App.css for better organization
 const styles = `
-:root { --primary-color: #27ae60; --bg-color: #f4f6f8; --card-bg: #ffffff; --text-color: #34495e; }
-
-/* --- MODIFIED FOR CENTERING --- */
-body { 
-  margin: 0; 
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; 
-  background-color: var(--bg-color); 
-  color: var(--text-color); 
-  /* Added Flexbox properties for centering */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+:root {
+  --primary-color: #27ae60;
+  --secondary-color: #2ecc71;
+  --bg-gradient: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+  --card-bg: #ffffff;
+  --text-color: #34495e;
 }
 
-.container { max-width: 800px; padding: 2rem; } /* Removed margin: 0 auto; as it's handled by body's flex */
-header { text-align: center; margin-bottom: 2rem; }
-header h1 { color: var(--primary-color); }
-.predictor-form { background: var(--card-bg); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
-label { display: flex; flex-direction: column; font-weight: bold; }
-select { padding: 0.75rem; border-radius: 4px; border: 1px solid #ddd; margin-top: 0.5rem; font-size: 1rem; }
-button { width: 100%; padding: 1rem; font-size: 1.1rem; font-weight: bold; color: white; background-color: var(--primary-color); border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; }
-button:hover { background-color: #2ecc71; }
-button:disabled { background-color: #95a5a6; cursor: not-allowed; }
-.results-container { margin-top: 2rem; }
-.results-card { background: var(--card-bg); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 5px solid var(--primary-color); }
-.results-card h2 { margin-top: 0; }
-.results-card ul { list-style: none; padding: 0; }
-.results-card li { font-size: 1.1rem; padding: 0.5rem 0; border-bottom: 1px solid #ecf0f1; }
-.results-card li:last-child { border-bottom: none; }
-.error-message { color: #e74c3c; background: #fbe2e2; padding: 1rem; border-radius: 4px; text-align: center; }
-.loading-spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--primary-color); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 2rem auto; }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 850px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+header h1 {
+  color: var(--primary-color);
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+header p {
+  color: #555;
+}
+
+.predictor-form {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+.predictor-form:hover {
+  transform: translateY(-2px);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+select {
+  padding: 0.7rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 5px rgba(39,174,96,0.4);
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(39,174,96,0.4);
+}
+button:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+
+.results-container {
+  margin-top: 2rem;
+}
+
+.results-card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  border-left: 6px solid var(--primary-color);
+  animation: fadeIn 0.5s ease-in-out;
+}
+.results-card h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+.results-card ul {
+  list-style: none;
+  padding: 0;
+}
+.results-card li {
+  font-size: 1.05rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+.results-card li:last-child {
+  border-bottom: none;
+}
+
+.error-message {
+  color: #e74c3c;
+  background: #fdecea;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.loading-spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid var(--primary-color);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 2rem auto;
+}
+
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
 `;
+
 const styleSheet = document.createElement("style");
 styleSheet.innerText = styles;
 document.head.appendChild(styleSheet);
 
 export default App;
+  
